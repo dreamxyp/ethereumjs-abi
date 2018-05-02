@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "bn.js": "^4.10.0",
-    "happyucjs-util": "/Users/dreamxyp/Transcend/happyuc-js/util/"
+    // "happyucjs-util": "/Users/dreamxyp/Transcend/happyuc-js/util/"
+    "happyucjs-util": "https://github.com/happyucjs/happyucjs-util.git"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
