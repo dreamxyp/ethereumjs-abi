@@ -2,7 +2,7 @@ var assert = require('assert')
 var abi    = require('../index.js')
 var BN     = require('bn.js')
 
-// Official test vectors from https://github.com/happyuc-project/wiki/wiki/HappyUC-Contract-ABI
+// Official test vectors from https://github.com/irchain/wiki/wiki/IrChain-Contract-ABI
 
 describe('official test vector 1 (encoding)', function () {
   it('should equal', function () {
@@ -603,22 +603,10 @@ describe('converting to serpent types', function () {
 })
 
 describe('utf8 handling', function () {
-  it('should encode latin and extensions', function () {
-    var a = abi.rawEncode([ 'string' ], [ 'happyuc számítógép' ]).toString('hex')
-    //var b = '00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000'
-    var b = '000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000166861707079756320737ac3a16dc3ad74c3b367c3a97000000000000000000000'
-    // console.log('a:',a);
-    assert.equal(a, b)
-  })
   it('should encode non-latin characters', function () {
     var a = abi.rawEncode([ 'string' ], [ '为什么那么认真？' ]).toString('hex')
     var b = '00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000'
     assert.equal(a, b)
-  })
-  it('should decode latin and extensions', function () {
-    var a = 'happyuc számítógép'
-    var b = abi.rawDecode([ 'string' ], new Buffer('000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000166861707079756320737ac3a16dc3ad74c3b367c3a97000000000000000000000', 'hex'))
-    assert.equal(a, b[0])
   })
   it('should decode non-latin characters', function () {
     var a = '为什么那么认真？'

@@ -1,7 +1,7 @@
-const utils = require('happyucjs-util')
-const BN    = require('bn.js')
+const utils = require('icjs-util')
+const BN = require('bn.js')
 
-var ABI     = function () {}
+var ABI = function () {}
 
 // Convert from short to canonical names
 // FIXME: optimise or make this nicer?
@@ -44,7 +44,7 @@ function parseTypeN (type) {
 // Parse N,M from type<N>x<M>
 function parseTypeNxM (type) {
   var tmp = /^\D+(\d+)x(\d+)$/.exec(type)
-  return [ parseInt(tmp[1], 10), parseInt(tmp[2], 10) ]
+  return [parseInt(tmp[1], 10), parseInt(tmp[2], 10)]
 }
 
 // Parse N in type[<N>] where "type" can itself be an array type.
@@ -86,14 +86,14 @@ function parseSignature (sig) {
 
   if (args !== null && args.length === 3) {
     return {
-      method: tmp[1],
-      args: args[1].split(','),
-      retargs: args[2].split(',')
+      method : tmp[1],
+      args   : args[1].split(','),
+      retargs: args[2].split(','),
     }
   } else {
     return {
       method: tmp[1],
-      args: tmp[2].split(',')
+      args  : tmp[2].split(','),
     }
   }
 }
@@ -135,10 +135,10 @@ function encodeSingle (type, arg) {
   } else if (type === 'bytes') {
     arg = new Buffer(arg)
 
-    ret = Buffer.concat([ encodeSingle('uint256', arg.length), arg ])
+    ret = Buffer.concat([encodeSingle('uint256', arg.length), arg])
 
     if ((arg.length % 32) !== 0) {
-      ret = Buffer.concat([ ret, utils.zeros(32 - (arg.length % 32)) ])
+      ret = Buffer.concat([ret, utils.zeros(32 - (arg.length % 32))])
     }
 
     return ret
@@ -276,11 +276,11 @@ function parseType (type) {
     var subArray = type.slice(0, type.lastIndexOf('['))
     subArray = parseType(subArray)
     ret = {
-      isArray: true,
-      name: type,
-      size: size,
+      isArray    : true,
+      name       : type,
+      size       : size,
       memoryUsage: size === 'dynamic' ? 32 : subArray.memoryUsage * size,
-      subArray: subArray
+      subArray   : subArray,
     }
     return ret
   } else {
@@ -297,9 +297,9 @@ function parseType (type) {
         break
     }
     ret = {
-      rawType: rawType,
-      name: type,
-      memoryUsage: 32
+      rawType    : rawType,
+      name       : type,
+      memoryUsage: 32,
     }
 
     if (type.startsWith('bytes') && type !== 'bytes' || type.startsWith('uint') || type.startsWith('int')) {
@@ -393,7 +393,7 @@ ABI.simpleEncode = function (method) {
     throw new Error('Argument count mismatch')
   }
 
-  return Buffer.concat([ ABI.methodID(sig.method, sig.args), ABI.rawEncode(sig.args, args) ])
+  return Buffer.concat([ABI.methodID(sig.method, sig.args), ABI.rawEncode(sig.args, args)])
 }
 
 ABI.simpleDecode = function (method, data) {
@@ -521,7 +521,7 @@ function isNumeric (c) {
   return (c >= '0') && (c <= '9')
 }
 
-// For a "documentation" refer to https://github.com/happyuc-project/serpent/blob/develop/preprocess.cpp
+// For a "documentation" refer to https://github.com/irchain/serpent/blob/develop/preprocess.cpp
 ABI.fromSerpent = function (sig) {
   var ret = []
   for (var i = 0; i < sig.length; i++) {

@@ -1,13 +1,13 @@
-# happyucjs-abi
+# icjs-abi
 
-[![NPM Package](https://img.shields.io/npm/v/happyucjs-abi.svg?style=flat-square)](https://www.npmjs.org/package/happyucjs-abi)
-[![Build Status](https://img.shields.io/travis/happyucjs/happyucjs-abi.svg?branch=master&style=flat-square)](https://travis-ci.org/happyucjs/happyucjs-abi)
-[![Coverage Status](https://img.shields.io/coveralls/happyucjs/happyucjs-abi.svg?style=flat-square)](https://coveralls.io/r/happyucjs/happyucjs-abi)
+[![NPM Package](https://img.shields.io/npm/v/icjs-abi.svg?style=flat-square)](https://www.npmjs.org/package/icjs-abi)
+[![Build Status](https://img.shields.io/travis/icjs/icjs-abi.svg?branch=master&style=flat-square)](https://travis-ci.org/icjs/icjs-abi)
+[![Coverage Status](https://img.shields.io/coveralls/icjs/icjs-abi.svg?style=flat-square)](https://coveralls.io/r/icjs/icjs-abi)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Gitter](https://img.shields.io/gitter/room/happyucjs/happyucjs-lib.svg?style=flat-square)](https://gitter.im/happyucjs/happyucjs-lib) or #happyucjs on freenode
+[![Gitter](https://img.shields.io/gitter/room/icjs/icjs-lib.svg?style=flat-square)](https://gitter.im/icjs/icjs-lib) or #icjs on freenode
 
 
-Module implementing the [HappyUC ABI](https://github.com/happyuc-project/wiki/wiki/HappyUC-Contract-ABI) in Javascript. Can be used with RPC libraries for communication or with happyucjs-vm to implement a fully fledged simulator.
+Module implementing the [IrChain ABI](https://github.com/irchain/wiki/wiki/IrChain-Contract-ABI) in Javascript. Can be used with RPC libraries for communication or with icjs-vm to implement a fully fledged simulator.
 
 ## Usage
 
@@ -20,7 +20,7 @@ There are three methods of interest:
 
 Example code:
 ```js
-var abi = require('happyucjs-abi')
+var abi = require('icjs-abi')
 
 // returns the encoded binary (as a Buffer) data to be sent
 var encoded = abi.rawEncode([ "address" ], [ "0x0000000000000000000000000000000000000000" ])
@@ -34,7 +34,7 @@ var decoded = abi.rawDecode([ "address" ], data)
 Planned for the future is supporting the JSON ABI definition:
 
 ```js
-var abi = require('happyucjs-abi')
+var abi = require('icjs-abi')
 
 // need to have the ABI definition in JSON as per specification
 var tokenAbi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"type":"function"},{"inputs":[],"type":"constructor"}]
@@ -47,7 +47,7 @@ var decoded = abi.decode(tokenAbi, "balanceOf(uint256 address)", data)
 #### Simple encoding and decoding
 
 ```js
-var abi = require('happyucjs-abi')
+var abi = require('icjs-abi')
 
 // returns the encoded binary (as a Buffer) data to be sent
 var encoded = abi.simpleEncode("balanceOf(address):(uint256)", "0x0000000000000000000000000000000000000000")
@@ -76,7 +76,7 @@ contract HashTest {
 
 Creating the same hash using this library:
 ```js
-var abi = require('happyucjs-abi')
+var abi = require('icjs-abi')
 var BN = require('bn.js')
 
 abi.soliditySHA3(

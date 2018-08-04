@@ -1,18 +1,17 @@
 {
-  "name": "happyucjs-abi",
-  "version": "0.6.5",
-  "description": "Decoder and encoder for the HappyUC ABI",
+  "name": "icjs-abi",
+  "version": "0.0.1",
+  "description": "Decoder and encoder for the IrChain ABI",
   "main": "index.js",
   "dependencies": {
     "bn.js": "^4.10.0",
-    // "happyucjs-util": "/Users/dreamxyp/Transcend/happyuc-js/util/"
-    "happyucjs-util": "https://github.com/happyucjs/happyucjs-util.git"
+    "icjs-util": "^0.0.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
     "istanbul": "^0.4.1",
     "mocha": "^2.1.0",
-    "standard": "^5.4.1"
+    "standard": "^11.0.1"
   },
   "scripts": {
     "coverage": "istanbul cover _mocha",
@@ -23,18 +22,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/happyucjs/happyucjs-abi.git"
+    "url": "git+https://github.com/icjs/icjs-abi.git"
   },
   "keywords": [
-    "happyuc",
+    "irchain",
     "ABI"
   ],
-  "author": "Alex Beregszaszi <alex@rtfs.hu>",
+  "author": "IrChain Team <contact@irchain.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/happyucjs/happyucjs-abi/issues"
+    "url": "https://github.com/icjs/icjs-abi/issues"
   },
-  "homepage": "https://github.com/happyucjs/happyucjs-abi",
+  "homepage": "https://github.com/icjs/icjs-abi",
   "standard": {
     "globals": [
       "describe",
