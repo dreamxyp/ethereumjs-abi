@@ -29,7 +29,7 @@ function elementaryName (name) {
 ABI.eventID = function (name, types) {
   // FIXME: use node.js util.format?
   var sig = name + '(' + types.map(elementaryName).join(',') + ')'
-  return utils.sha3(new Buffer(sig))
+  return utils.sha3(Buffer.from(sig))
 }
 
 ABI.methodID = function (name, types) {
@@ -108,7 +108,7 @@ function encodeSingle (type, arg) {
   } else if (type === 'bool') {
     return encodeSingle('uint8', arg ? 1 : 0)
   } else if (type === 'string') {
-    return encodeSingle('bytes', new Buffer(arg, 'utf8'))
+    return encodeSingle('bytes', Buffer.from(arg, 'utf8'))
   } else if (isArray(type)) {
     // this part handles fixed-length ([2]) and variable length ([]) arrays
     // NOTE: we catch here all calls to arrays, that simplifies the rest
@@ -133,7 +133,7 @@ function encodeSingle (type, arg) {
     }
     return Buffer.concat(ret)
   } else if (type === 'bytes') {
-    arg = new Buffer(arg)
+    arg = Buffer.from(arg)
 
     ret = Buffer.concat([encodeSingle('uint256', arg.length), arg])
 
@@ -211,7 +211,7 @@ function decodeSingle (parsedType, data, offset) {
     return decodeSingle(parsedType.rawType, data, offset).toString() === new BN(1).toString()
   } else if (parsedType.name === 'string') {
     var bytes = decodeSingle(parsedType.rawType, data, offset)
-    return new Buffer(bytes, 'utf8').toString()
+    return Buffer.from(bytes, 'utf8').toString()
   } else if (parsedType.isArray) {
     // this part handles fixed-length arrays ([2]) and variable length ([]) arrays
     // NOTE: we catch here all calls to arrays, that simplifies the rest
@@ -302,7 +302,7 @@ function parseType (type) {
       memoryUsage: 32,
     }
 
-    if (type.startsWith('bytes') && type !== 'bytes' || type.startsWith('uint') || type.startsWith('int')) {
+    if ((type.startsWith('bytes') && type !== 'bytes') || type.startsWith('uint') || type.startsWith('int')) {
       ret.size = parseTypeN(type)
     } else if (type.startsWith('ufixed') || type.startsWith('fixed')) {
       ret.size = parseTypeNxM(type)
@@ -372,7 +372,7 @@ ABI.rawEncode = function (types, values) {
 
 ABI.rawDecode = function (types, data) {
   var ret = []
-  data = new Buffer(data)
+  data = Buffer.from(data)
   var offset = 0
   for (var i in types) {
     var type = elementaryName(types[i])
@@ -423,7 +423,7 @@ ABI.stringify = function (types, values) {
     var value = values[i]
 
     // if it is an array type, concat the items
-    if (/^[^\[]+\[.*\]$/.test(type)) {
+    if (/^[^[]+\[.*]$/.test(type)) {
       value = value.map(function (item) {
         return stringify(type, item)
       }).join(', ')
@@ -452,9 +452,9 @@ ABI.solidityPack = function (types, values) {
     if (type === 'bytes') {
       ret.push(value)
     } else if (type === 'string') {
-      ret.push(new Buffer(value, 'utf8'))
+      ret.push(Buffer.from(value, 'utf8'))
     } else if (type === 'bool') {
-      ret.push(new Buffer(value ? '01' : '00', 'hex'))
+      ret.push(Buffer.from(value ? '01' : '00', 'hex'))
     } else if (type === 'address') {
       ret.push(utils.setLengthLeft(value, 20))
     } else if (type.startsWith('bytes')) {
